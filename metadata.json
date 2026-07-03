@@ -1,0 +1,6 @@
+{
+  "name": "Mi Gestor Financiero",
+  "description": "Una aplicación web de gestión financiera personal para controlar ingresos, gastos, inversiones y efectivo mes a mes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

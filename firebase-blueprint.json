@@ -1,0 +1,48 @@
+{
+  "entities": {
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Represents a monetary transaction (Income, Expense, Investment, Cash increase, Cash decrease)",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique transaction identifier"
+        },
+        "fecha": {
+          "type": "string",
+          "format": "date",
+          "description": "Transaction date in YYYY-MM-DD format"
+        },
+        "categoria": {
+          "type": "string",
+          "enum": ["Ingreso", "Gasto", "Inversion", "Ef+", "Ef-"],
+          "description": "Category of the transaction"
+        },
+        "monto": {
+          "type": "number",
+          "description": "The monetary amount"
+        },
+        "motivo": {
+          "type": "string",
+          "description": "Reason or description of the transaction"
+        },
+        "createdAt": {
+          "type": "number",
+          "description": "Timestamp when the transaction was created"
+        },
+        "uid": {
+          "type": "string",
+          "description": "The Firebase user ID who owns this transaction"
+        }
+      },
+      "required": ["id", "fecha", "categoria", "monto", "motivo", "createdAt", "uid"]
+    }
+  },
+  "firestore": {
+    "users/{userId}/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "Collection of user-specific transactions"
+    }
+  }
+}
