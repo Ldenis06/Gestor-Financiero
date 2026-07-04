@@ -1,5 +1,5 @@
 import React from 'react';
-import { LogOut, User, Calendar, ChevronLeft, ChevronRight, TrendingUp, Sun, Moon } from 'lucide-react';
+import { LogOut, User, Calendar, ChevronLeft, ChevronRight, TrendingUp, Sun, Moon, Eye, EyeOff } from 'lucide-react';
 import { User as FirebaseUser } from 'firebase/auth';
 import { auth } from '../firebase';
 
@@ -12,6 +12,8 @@ interface HeaderProps {
   onLogout: () => void;
   darkMode: boolean;
   onToggleDarkMode: () => void;
+  hideBalances: boolean;
+  onToggleHideBalances: () => void;
 }
 
 const MESES = [
@@ -27,7 +29,9 @@ export default function Header({
   onYearChange,
   onLogout,
   darkMode,
-  onToggleDarkMode
+  onToggleDarkMode,
+  hideBalances,
+  onToggleHideBalances
 }: HeaderProps) {
 
   const handlePrevMonth = () => {
@@ -138,6 +142,15 @@ export default function Header({
               </div>
 
               <div className="flex items-center gap-1">
+                {/* Mostrar/Ocultar montos */}
+                <button
+                  onClick={onToggleHideBalances}
+                  className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition cursor-pointer"
+                  title={hideBalances ? 'Mostrar montos' : 'Ocultar montos'}
+                >
+                  {hideBalances ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                </button>
+
                 {/* Dark Mode Toggle */}
                 <button
                   onClick={onToggleDarkMode}
