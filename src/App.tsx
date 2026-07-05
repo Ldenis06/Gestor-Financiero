@@ -19,6 +19,8 @@ import TransactionForm from './components/TransactionForm';
 import TransactionList from './components/TransactionList';
 import GoogleDriveModal from './components/GoogleDriveModal';
 import MarketTicker from './components/MarketTicker';
+import ConversorRapido from './components/ConversorRapido';
+import CalculadoraCuotas from './components/CalculadoraCuotas';
 import { Sparkles, Info, ArrowUpRight, ShieldCheck, Download, Trash2, Cloud } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -460,6 +462,12 @@ export default function App() {
                 </div>
               </div>
             </div>
+
+            {/* Conversor rápido de monedas */}
+            <ConversorRapido />
+
+            {/* Calculadora de cuotas */}
+            <CalculadoraCuotas />
           </div>
 
           {/* Right Column: List & Filter (colspan 8) */}
