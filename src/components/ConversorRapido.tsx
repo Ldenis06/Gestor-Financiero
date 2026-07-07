@@ -99,4 +99,66 @@ export default function ConversorRapido() {
       </div>
 
       {/* Selector de dirección */}
-      <div className="flex gap-1.5 mb-3 bg-slate-50 dark:bg-slate-950 p-1
+      <div className="flex gap-1.5 mb-3 bg-slate-50 dark:bg-slate-950 p-1 rounded-lg border border-slate-200 dark:border-slate-800">
+        <button
+          onClick={() => setDireccion('pesosADivisas')}
+          className={`flex-1 text-[11px] font-bold py-1.5 rounded-md transition ${
+            direccion === 'pesosADivisas'
+              ? 'bg-blue-600 text-white shadow-sm'
+              : 'text-slate-500 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-900'
+          }`}
+        >
+          Pesos → Dólar / Euro
+        </button>
+        <button
+          onClick={() => setDireccion('dolaresAPesos')}
+          className={`flex-1 text-[11px] font-bold py-1.5 rounded-md transition ${
+            direccion === 'dolaresAPesos'
+              ? 'bg-blue-600 text-white shadow-sm'
+              : 'text-slate-500 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-900'
+          }`}
+        >
+          Dólar → Pesos
+        </button>
+      </div>
+
+      <div className="mb-3">
+        <label className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wide mb-1 block">
+          {direccion === 'pesosADivisas' ? 'Monto en pesos (ARS)' : 'Monto en dólares (USD)'}
+        </label>
+        <div className="relative">
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 text-sm font-mono">
+            {direccion === 'pesosADivisas' ? '$' : 'US$'}
+          </span>
+          <input
+            type="text"
+            inputMode="decimal"
+            value={monto}
+            onChange={(e) => setMonto(e.target.value.replace(/[^0-9.,]/g, ''))}
+            className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg pl-9 pr-3 py-2 text-sm font-mono font-bold text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+          />
+        </div>
+      </div>
+
+      {loading ? (
+        <p className="text-[11px] text-slate-400 dark:text-slate-500 text-center py-2">Cargando cotizaciones...</p>
+      ) : error ? (
+        <p className="text-[11px] text-rose-500 text-center py-2">No se pudieron cargar las cotizaciones. Probá de nuevo más tarde.</p>
+      ) : (
+        <div className="space-y-1.5">
+          {filas.map((fila) => (
+            <div
+              key={fila.label}
+              className="flex items-center justify-between bg-slate-50 dark:bg-slate-950 rounded-lg px-3 py-2"
+            >
+              <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">{fila.label}</span>
+              <span className="text-sm font-bold font-mono text-slate-800 dark:text-slate-100">
+                {fila.moneda} {fila.valor.toLocaleString('es-AR', { maximumFractionDigits: 2 })}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
