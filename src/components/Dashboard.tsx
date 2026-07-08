@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { MonthSummary } from '../types';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Info } from 'lucide-react';
 
 interface DashboardProps {
   summary: MonthSummary;
@@ -8,6 +9,7 @@ interface DashboardProps {
 }
 
 export default function Dashboard({ summary, hideBalances = false }: DashboardProps) {
+  const [mostrarInfoPlataInicial, setMostrarInfoPlataInicial] = useState(false);
   // Format currency in Spanish AR style
   const formatCurrency = (val: number) => {
     return new Intl.NumberFormat('es-AR', {
@@ -89,7 +91,7 @@ export default function Dashboard({ summary, hideBalances = false }: DashboardPr
 
   const itemVariants = {
     hidden: { opacity: 0, y: 10 },
-    show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 400, damping: 30 } }
+    show: { opacity: 1, y: 0, transition: { type: 'spring' as const, stiffness: 400, damping: 30 } }
   };
 
   return (
@@ -107,13 +109,44 @@ export default function Dashboard({ summary, hideBalances = false }: DashboardPr
           className={`p-4 rounded-xl border shadow-xs flex flex-col justify-between relative overflow-hidden transition-all duration-150 ${card.cardClass}`}
         >
           <div>
-            <p className={`text-[10px] font-bold uppercase tracking-wider mb-1 ${card.titleClass}`}>
-              {card.title}
-            </p>
+            <div className="flex items-center justify-between mb-1">
+              <p className={`text-[10px] font-bold uppercase tracking-wider ${card.titleClass}`}>
+                {card.title}
+              </p>
+              {card.id === 'plata-inicial' && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setMostrarInfoPlataInicial((prev) => !prev);
+                  }}
+                  className="text-slate-300 dark:text-slate-600 hover:text-blue-500 dark:hover:text-blue-400 transition cursor-pointer"
+                  title="¿Qué es la Plata Inicial?"
+                >
+                  <Info className="w-3 h-3" />
+                </button>
+              )}
+            </div>
             <p className={`text-lg font-bold font-mono tracking-tight leading-tight select-none ${card.valueClass}`}>
               {hideBalances ? '••••••' : formatCurrency(card.value)}
             </p>
           </div>
+
+          {card.id === 'plata-inicial' && (
+            <AnimatePresence>
+              {mostrarInfoPlataInicial && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="overflow-hidden"
+                >
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-normal pt-2 mt-2 border-t border-slate-100 dark:border-slate-800 font-sans">
+                    Se calcula sumando lo que tenías en cuenta y en efectivo al terminar el mes anterior. Los fondos sobrantes de cada mes pasan automáticamente al siguiente.
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          )}
         </motion.div>
       ))}
     </motion.div>
