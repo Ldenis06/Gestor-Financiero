@@ -109,8 +109,48 @@ export default function Login({ onLoginSuccess, darkMode, onToggleDarkMode }: Lo
                   <div className="w-4 h-4 border-2 border-slate-300 dark:border-slate-700 border-t-slate-600 dark:border-t-slate-400 rounded-full animate-spin" />
                 ) : (
                   <>
-                    <svg className="h-4 w-4" viewBox="0 0 24 24">
-                      <path fill="#EA4335" d="M12 5.04c1.62 0 3.08.56 4.22 1.64l3.15-3.15C17.45 1.68 14.93 1 12 1 7.35 1 3.39 3.68 1.48 7.59l3.75 2.91C6.18 7.32 8.87 5.04 12 5.04z" />
-                      <path fill="#4285F4" d="M23.49 12.27c0-.81-.07-1.59-.2-2.36H12v4.47h6.46c-.28 1.47-1.11 2.71-2.36 3.55l3.66 2.84c2.14-1.97 3.37-4.88 3.37-8.5z" />
-                      <path fill="#FBBC05" d="M5.23 10.5c-.23-.68-.36-1.41-.36-2.17s.13-1.49.36-2.17L1.48 3.25C.53 5.16 0 7.29 0 9.53s.53 4.37 1.48 6.28l3.75-2.91z" />
-                      <path fill="#34A853" d="M12 23c3.24 0 5.97-1.07 7.96-2.91l-3.66-2.84c-1.01.68-2.31 1.09-4.3 1.09-3.13
+                    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="12" r="11" fill="#F3F4F6" stroke="#E5E7EB" strokeWidth="1"/>
+                      <path d="M18.5 12c0-1.38-.46-2.65-1.23-3.68H12v2.78h3.47c-.29.77-.74 1.43-1.3 1.9v1.93h2.11c1.23-1.13 1.94-2.78 1.94-4.63z" fill="#4285F4"/>
+                      <path d="M12 18.5c1.27 0 2.42-.42 3.23-1.12l-2.11-1.93c-.61.41-1.38.65-2.12.65-1.62 0-2.99-1.37-2.99-3s1.37-3 2.99-3c.74 0 1.51.24 2.12.65l2.11-1.93C14.42 7.92 13.27 7.5 12 7.5c-3.32 0-6 2.68-6 6s2.68 6 6 6z" fill="#34A853"/>
+                      <path d="M12 5.5c.73 0 1.41.23 2 .63V4.18C13.41 3.45 12.76 3 12 3c-3.32 0-6 2.68-6 6v1.45h1.92C7.5 7.87 9.37 5.5 12 5.5z" fill="#FBBC05"/>
+                      <path d="M18.5 12c0-.4-.03-.79-.1-1.18H12v2.38h3.47c-.1.28-.23.56-.38.82l2.11 1.63c1.23-1.13 1.94-2.78 1.94-4.63z" fill="#EA4335"/>
+                    </svg>
+                    <span>Iniciar con Google</span>
+                  </>
+                )}
+              </button>
+            </div>
+
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center" aria-hidden="true">
+                <div className="w-full border-t border-slate-100 dark:border-slate-800" />
+              </div>
+              <div className="relative flex justify-center text-[10px] uppercase">
+                <span className="bg-white dark:bg-slate-900 px-3 text-slate-400 dark:text-slate-500 font-bold tracking-wider font-mono">O TAMBIÉN</span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              disabled={loading}
+              onClick={handleGuestLogin}
+              className="w-full flex justify-center items-center gap-2 px-4 py-2.5 border border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50 dark:bg-slate-950 hover:bg-slate-100 dark:hover:bg-slate-900 text-xs font-bold text-slate-700 dark:text-slate-200 focus:outline-none transition-all duration-150 cursor-pointer disabled:opacity-50"
+            >
+              <User className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
+              <span>Entrar como Invitado</span>
+            </button>
+          </div>
+
+          <div className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 text-center">
+            <p className="text-[10px] text-slate-400 dark:text-slate-500 font-sans flex items-center justify-center gap-1">
+              <Sparkles className="w-3 h-3 text-blue-500" />
+              Los datos se guardarán de forma segura en Firestore.
+            </p>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+export { Login };
