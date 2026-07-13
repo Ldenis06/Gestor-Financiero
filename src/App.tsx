@@ -305,11 +305,24 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col font-sans antialiased text-slate-800 dark:text-slate-100 transition-colors duration-200">
-      <div className="sticky top-0 z-50 bg-slate-50 dark:bg-slate-950">
-        <MarketTicker />
-      </div>
-      <Header user={user} selectedMonth={selectedMonth} selectedYear={selectedYear} onMonthChange={setSelectedMonth} onYearChange={setSelectedYear} onLogout={handleLogout} darkMode={darkMode} onToggleDarkMode={toggleDarkMode} hideBalances={hideBalances} onToggleHideBalances={toggleHideBalances} 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div className="sticky top-0 z-50 bg-slate-50 dark:bg-slate-950">
+  <MarketTicker />
+</div>
+
+<Header
+  user={user}
+  selectedMonth={selectedMonth}
+  selectedYear={selectedYear}
+  onMonthChange={setSelectedMonth}
+  onYearChange={setSelectedYear}
+  onLogout={handleLogout}
+  darkMode={darkMode}
+  onToggleDarkMode={toggleDarkMode}
+  hideBalances={hideBalances}
+  onToggleHideBalances={toggleHideBalances}
+/>
+
+<main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm transition-colors duration-200">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
