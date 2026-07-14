@@ -1,3 +1,4 @@
+import ScrollToTop from "./components/ScrollToTop";
 import React, { useState, useEffect } from 'react';
 import { onAuthStateChanged, signOut, User } from 'firebase/auth';
 import {
@@ -361,6 +362,8 @@ export default function App() {
           <GoogleDriveModal isOpen={isDriveModalOpen} onClose={() => setIsDriveModalOpen(false)} transactions={transactions} onImportTransactions={handleImportTransactions} currentMonthName={MESES[selectedMonth]} currentYear={selectedYear} driveToken={driveToken} onSetDriveToken={setDriveToken} />
         )}
       </AnimatePresence>
+   <ScrollToTop />
+      
     </div>
   );
 }
