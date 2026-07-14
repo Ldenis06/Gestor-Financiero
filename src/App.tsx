@@ -21,7 +21,7 @@ import GoogleDriveModal from './components/GoogleDriveModal';
 import MarketTicker from './components/MarketTicker';
 import ConversorRapido from './components/ConversorRapido';
 import CalculadoraCuotas from './components/CalculadoraCuotas';
-import { ShieldCheck, Download, Trash2, Cloud, ArrowUp } from 'lucide-react';
+import { ShieldCheck, Download, Trash2, Cloud } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 export default function App() {
@@ -31,7 +31,6 @@ export default function App() {
   const [transactionsLoading, setTransactionsLoading] = useState(false);
   const [driveToken, setDriveToken] = useState<string | null>(null);
   const [isDriveModalOpen, setIsDriveModalOpen] = useState(false);
-  const [showScrollTop, setShowScrollTop] = useState(false);
   const [darkMode, setDarkMode] = useState<boolean>(() => {
     const saved = localStorage.getItem('darkMode');
     return saved === 'true';
@@ -111,18 +110,6 @@ export default function App() {
     });
     return () => unsubscribe();
   }, [user]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 300);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   const getMonthYearFromDate = (dateStr: string) => {
     const parts = dateStr.split('-');
@@ -318,11 +305,24 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col font-sans antialiased text-slate-800 dark:text-slate-100 transition-colors duration-200">
-      <div className="sticky top-0 z-50">
-        <MarketTicker />
-      </div>
-      <Header user={user} selectedMonth={selectedMonth} selectedYear={selectedYear} onMonthChange={setSelectedMonth} onYearChange={setSelectedYear} onLogout={handleLogout} darkMode={darkMode} onToggleDarkMode={toggleDarkMode} hideBalances={hideBalances} onToggleHideBalances={toggleHideBalances} />
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div className="sticky top-0 z-50 bg-slate-50 dark:bg-slate-950">
+  <MarketTicker />
+
+  <Header
+    user={user}
+    selectedMonth={selectedMonth}
+    selectedYear={selectedYear}
+    onMonthChange={setSelectedMonth}
+    onYearChange={setSelectedYear}
+    onLogout={handleLogout}
+    darkMode={darkMode}
+    onToggleDarkMode={toggleDarkMode}
+    hideBalances={hideBalances}
+    onToggleHideBalances={toggleHideBalances}
+  />
+</div>
+
+<main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm transition-colors duration-200">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
@@ -356,23 +356,6 @@ export default function App() {
           <p className="text-[10px] text-slate-400 dark:text-slate-500 font-sans">Mi Gestor Financiero © {new Date().getFullYear()}</p>
         </div>
       </footer>
-
-      {/* Botón Volver Arriba */}
-      <AnimatePresence>
-        {showScrollTop && (
-          <motion.button
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            onClick={scrollToTop}
-            className="fixed bottom-8 right-8 p-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg transition-all duration-200 cursor-pointer"
-            title="Volver arriba"
-          >
-            <ArrowUp className="w-5 h-5" />
-          </motion.button>
-        )}
-      </AnimatePresence>
-
       <AnimatePresence>
         {isDriveModalOpen && (
           <GoogleDriveModal isOpen={isDriveModalOpen} onClose={() => setIsDriveModalOpen(false)} transactions={transactions} onImportTransactions={handleImportTransactions} currentMonthName={MESES[selectedMonth]} currentYear={selectedYear} driveToken={driveToken} onSetDriveToken={setDriveToken} />
